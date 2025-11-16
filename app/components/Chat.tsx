@@ -18,12 +18,23 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
+    // Skip scrolling on initial mount to prevent page scroll
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    // Only scroll when messages actually change (new messages added)
     scrollToBottom();
   }, [messages]);
 
@@ -126,7 +137,10 @@ export default function Chat() {
         </p>
       </div>
 
-      <div className='flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50'>
+      <div
+        ref={messagesContainerRef}
+        className='flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50'
+      >
         {messages.map((message, index) => (
           <div
             key={index}
