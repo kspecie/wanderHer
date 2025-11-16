@@ -1,5 +1,8 @@
 # WanderHer
 
+https://wanderher.vercel.app/
+
+
 **WanderHer** is an AI-powered travel companion application designed specifically for solo female travelers. Built with Next.js and powered by Mistral AI, it provides intelligent, safety-focused guidance for planning unforgettable adventures around the world.
 
 ## Features
